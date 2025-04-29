@@ -21,14 +21,14 @@
     leds {
         compatible = "gpio-leds";
         led0: led_0 {
-            gpios = <&gpio0 06 GPIO_ACTIVE_HIGH>;
+            gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
             label = "Blue LED";
         };
     };
 
     buttons {
         compatible = "gpio-keys";
-            gpios = <&gpio1 06 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+            gpios = <&gpio1 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
         button0: button_0 {
             label = "Push button switch";
             zephyr,code = <INPUT_KEY_0>;

@@ -1,0 +1,103 @@
+/*
+ * You need to update the bootloader that comes with the dongle
+ * to an UF2-enabled one, like:
+ * https://github.com/adafruit/Adafruit_nRF52_Bootloader/
+ */
+
+/dts-v1/;
+#include <nordic/nrf52840_qiaa.dtsi>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    model = "Raytac MDBT50Q-CX-40";
+
+    chosen {
+        zephyr,code-partition = &code_partition;
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+        zephyr,console = &cdc_acm_uart;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        led0: led_0 {
+            gpios = <&gpio0 06 GPIO_ACTIVE_HIGH>;
+            label = "Blue LED";
+        };
+    };
+
+    buttons {
+        compatible = "gpio-keys";
+            gpios = <&gpio1 06 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+        button0: button_0 {
+            label = "Push button switch";
+            zephyr,code = <INPUT_KEY_0>;
+        };
+    };
+
+    aliases {
+        sw0 = &button0;
+    };
+};
+
+&adc {
+    status = "okay";
+};
+
+&gpiote {
+    status = "okay";
+};
+
+&gpio0 {
+    status = "okay";
+};
+
+&gpio1 {
+    status = "okay";
+};
+
+&usbd {
+    status = "okay";
+    cdc_acm_uart: cdc_acm_uart {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
+
+/* Taken from the adafruit_itsybitsy_nrf52840.dts in Zephyr.
+ *
+ * You can compare this to the seeeduino_xiao_ble.dts they are very similar
+ */
+&flash0 {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		/* To enable flashing with UF2 bootloader, we
+		 * must reserve a partition for SoftDevice.
+		 * See https://learn.adafruit.com/introducing-the-adafruit-nrf52840-feather?view=all#hathach-memory-map
+		 */
+		reserved_partition_0: partition@0 {
+			label = "SoftDevice";
+			reg = <0x000000000 DT_SIZE_K(152)>;
+		};
+		code_partition: partition@26000 {
+			label = "Application";
+			reg = <0x00026000 DT_SIZE_K(796)>;
+		};
+
+		/*
+		 * The flash starting at 0x000ed000 and ending at
+		 * 0x000f4000 is reserved for use by the application.
+		 */
+		storage_partition: partition@ed000 {
+			label = "storage";
+			reg = <0x0000ed000 DT_SIZE_K(28)>;
+		};
+
+		boot_partition: partition@f4000 {
+			label = "UF2";
+			reg = <0x000f4000 DT_SIZE_K(48)>;
+		};
+	};
+};

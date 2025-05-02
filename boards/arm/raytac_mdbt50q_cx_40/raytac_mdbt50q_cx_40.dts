@@ -28,8 +28,8 @@
 
     buttons {
         compatible = "gpio-keys";
-            gpios = <&gpio1 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
         button0: button_0 {
+            gpios = <&gpio1 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
             label = "Push button switch";
             zephyr,code = <INPUT_KEY_0>;
         };

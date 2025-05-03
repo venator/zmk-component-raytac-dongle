@@ -2,3 +2,8 @@ config BOARD_ENABLE_DCDC
     bool "Enable DCDC mode"
     select SOC_DCDC_NRF52X
     default y
+
+config BOARD_ENABLE_DCDC_HV
+    bool "Enable DCDC HV mode"
+    select SOC_DCDC_NRF52X_HV
+    default y

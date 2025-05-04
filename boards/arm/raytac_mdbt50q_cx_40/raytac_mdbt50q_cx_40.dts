@@ -20,7 +20,7 @@
 
     leds {
         compatible = "gpio-leds";
-        led0: led_0 {
+        led0_blue: led_0 {
             gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
             label = "Blue LED";
         };
@@ -39,16 +39,6 @@
         sw0 = &button0;
     };
 };
-
-/*
-&reg0 {
-    status = "okay";
-};
-
-&reg1 {
-    regulator-initial-mode = <NRF5X_REG_MODE_DCDC>;
-};
-*/
 
 &adc {
     status = "okay";

@@ -20,8 +20,8 @@
 
     leds {
         compatible = "gpio-leds";
-        led0_blue: led_0 {
-            gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
+        led0: led_0 {
+            gpios = <&gpio0 8 GPIO_ACTIVE_LOW>;
             label = "Blue LED";
         };
     };
